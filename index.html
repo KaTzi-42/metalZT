@@ -247,21 +247,13 @@
                 Маєте запитання або бажаєте оформити замовлення? Заповніть форму
                 нижче або зв'яжіться з нами зручним для вас способом.
             </p>
-            <form class="contact-form" id="contactForm" action="https://formspree.io/f/meokdqgw" method="POST">
+            <form class="contact-form" id="contactForm">
                 <!--
-                     Зміни:
-                     - Видалено атрибути name="contact" та data-netlify="true"
-                     - Видалено приховане поле <input type="hidden" name="form-name" ... />
-                     - Додано атрибут action="https://formspree.io/f/YOUR_FORMSPREE_FORM_ID"
-                       (ВАМ ПОТРІБНО БУДЕ ОТРИМАТИ СВІЙ УНІКАЛЬНИЙ ID З FORMSPREE)
-
-                     Необов'язкові, але корисні приховані поля для Formspree:
-                     - _next: Перенаправить користувача на вашу сторінку "Дякую!" після успішної відправки.
-                     - _subject: Вказує тему листа, який ви отримаєте.
+                     Changes:
+                     - Removed action="https://formspree.io/f/YOUR_FORMSPREE_FORM_ID"
+                     - Removed method="POST" (we'll handle it entirely with JS)
+                     - Removed any hidden fields for Netlify/Formspree (_next, _subject, form-name)
                 -->
-                <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html" />
-                <!-- Змініть "yourdomain.com" на URL вашого сайту після розгортання -->
-                <input type="hidden" name="_subject" value="Нова заявка з сайту про короби для кондиціонерів" />
 
                 <div class="form-group">
                     <label for="name">Ваше ім'я:</label>
@@ -283,6 +275,8 @@
                     Надіслати заявку
                 </button>
             </form>
+
+            <!-- Make sure this div is still here for the message -->
             <div id="formMessage" class="form-message"></div>
         </div>
     </section>

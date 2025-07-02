@@ -1,52 +1,55 @@
-// 2. Функціонал для форми зворотного зв'язку (для Formspree)
-// У цьому варіанті форма відправляється стандартним POST-запитом
-// і Formspree обробляє перенаправлення на сторінку "Дякую!"
-// Якщо ви хочете AJAX-відправку з Formspree, JavaScript код буде іншим.
-// Але для простоти та уникнення "Method Not Allowed" стандартний POST є найкращим.
+// ... other code ...
+
+// 2. Функціонал для форми зворотного зв'язку (лише демонстрація "Дякую!")
 const contactForm = document.getElementById('contactForm');
 const formMessage = document.getElementById('formMessage');
 
 if (contactForm && formMessage) {
-    // Якщо ви хочете показувати повідомлення без перезавантаження сторінки
-    // тоді вам потрібно буде використати AJAX (fetch) з Formspree,
-    // і JS буде подібним до того, що був для Netlify, але з action URL Formspree
-    // і додаванням 'Accept': 'application/json' в заголовки.
-    // Для початку, я пропоную залишити стандартну поведінку.
-
-    // Якщо ви все ж хочете AJAX з Formspree:
     contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Запобігти стандартній відправці форми (тобто перезавантаженню)
 
+        // Приховати попередні повідомлення
         formMessage.style.display = 'none';
         formMessage.classList.remove('success', 'error');
 
-        const formData = new FormData(contactForm);
+        // ----------------------------------------------------
+        // МАЙБУТНЯ ЛОГІКА ДЛЯ SALESFORCE / ВЛАСНОГО БЕКЕНДУ БУДЕ ТУТ
+        // Наразі ми просто імітуємо успіх.
+        // ----------------------------------------------------
+
+        // Можете отримати дані форми, якщо хочете побачити їх у консолі:
+        const name = contactForm.name.value;
+        const phone = contactForm.phone.value;
+        const email = contactForm.email.value;
+        const message = contactForm.message.value;
+
+        console.log('Дані форми (наразі не відправляються):', { name, phone, email, message });
 
         try {
-            const response = await fetch(contactForm.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json' // Важливо для AJAX-відповіді від Formspree
-                }
-            });
+            // Імітуємо затримку, ніби дані відправляються на сервер
+            await new Promise(resolve => setTimeout(resolve, 1500)); // Затримка 1.5 секунди
 
-            if (response.ok) {
-                formMessage.textContent = 'Дякуємо! Ваша заявка успішно надіслана. Ми зв\'яжемося з вами найближчим часом.';
+            // Завжди припускаємо успіх для цієї демонстрації
+            const isSuccess = true;
+
+            if (isSuccess) {
+                formMessage.textContent = 'Дякуємо! Ваша заявка успішно надіслана (дані не були відправлені на сервер).';
                 formMessage.classList.add('success');
-                contactForm.reset();
+                contactForm.reset(); // Очистити форму
             } else {
-                const errorData = await response.json(); // Formspree повертає JSON з помилками
-                console.error('Formspree error:', errorData);
-                formMessage.textContent = 'На жаль, сталася помилка при відправці. Спробуйте ще раз або зателефонуйте нам.';
+                // Цей блок коду зараз не спрацює, оскільки isSuccess завжди true.
+                // Він знадобиться, коли буде реальна логіка відправки.
+                formMessage.textContent = 'На жаль, сталася помилка при обробці заявки. Спробуйте ще раз.';
                 formMessage.classList.add('error');
             }
         } catch (error) {
-            console.error('Помилка відправки форми (fetch):', error);
-            formMessage.textContent = 'На жаль, сталася помилка при відправці. Перевірте підключення до інтернету.';
+            console.error('Помилка при обробці форми:', error);
+            formMessage.textContent = 'Виникла непередбачена помилка. Спробуйте ще раз.';
             formMessage.classList.add('error');
         } finally {
-            formMessage.style.display = 'block';
+            formMessage.style.display = 'block'; // Показати повідомлення
         }
     });
 }
+
+// ... rest of your code ...
