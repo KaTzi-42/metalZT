@@ -35,7 +35,7 @@
 <header class="header">
     <div class="container">
         <a href="/" class="logo">
-            <img src="../metalZT_/img/metallogo.webp" alt="Логотип компанії"/>
+            <img src="/img/metallogo.webp" alt="Логотип компанії"/>
         </a>
         <nav class="nav">
             <button class="nav-toggle" aria-label="Відкрити меню">
@@ -247,57 +247,43 @@
                 Маєте запитання або бажаєте оформити замовлення? Заповніть форму
                 нижче або зв'яжіться з нами зручним для вас способом.
             </p>
-            <form class="contact-form" id="contactForm" name="contact" method="POST" data-netlify="true">
-                <!-- Додано:
-                     name="contact" - унікальне ім'я для форми (обов'язково для Netlify)
-                     method="POST"  - метод відправки
-                     data-netlify="true" - атрибут, який повідомляє Netlify про необхідність обробити цю форму
+            <form class="contact-form" id="contactForm" action="https://formspree.io/f/meokdqgw" method="POST">
+                <!--
+                     Зміни:
+                     - Видалено атрибути name="contact" та data-netlify="true"
+                     - Видалено приховане поле <input type="hidden" name="form-name" ... />
+                     - Додано атрибут action="https://formspree.io/f/YOUR_FORMSPREE_FORM_ID"
+                       (ВАМ ПОТРІБНО БУДЕ ОТРИМАТИ СВІЙ УНІКАЛЬНИЙ ID З FORMSPREE)
+
+                     Необов'язкові, але корисні приховані поля для Formspree:
+                     - _next: Перенаправить користувача на вашу сторінку "Дякую!" після успішної відправки.
+                     - _subject: Вказує тему листа, який ви отримаєте.
                 -->
-                <input type="hidden" name="form-name" value="contact" />
-                <!-- Додано: Це приховане поле також потрібне для Netlify -->
+                <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html" />
+                <!-- Змініть "yourdomain.com" на URL вашого сайту після розгортання -->
+                <input type="hidden" name="_subject" value="Нова заявка з сайту про короби для кондиціонерів" />
 
                 <div class="form-group">
                     <label for="name">Ваше ім'я:</label>
-                    <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            placeholder="Іван"
-                            required
-                    />
+                    <input type="text" id="name" name="name" placeholder="Іван" required />
                 </div>
                 <div class="form-group">
                     <label for="phone">Телефон:</label>
-                    <input
-                            type="tel"
-                            id="phone"
-                            name="phone"
-                            placeholder="+380XXXXXXXXX"
-                            required
-                    />
+                    <input type="tel" id="phone" name="phone" placeholder="+380XXXXXXXXX" required />
                 </div>
                 <div class="form-group">
                     <label for="email">Email (необов'язково):</label>
-                    <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="example@gmail.com"
-                    />
+                    <input type="email" id="email" name="email" placeholder="example@gmail.com" />
                 </div>
                 <div class="form-group">
                     <label for="message">Ваше повідомлення:</label>
-                    <textarea
-                            id="message"
-                            name="message"
-                            rows="5"
-                            placeholder="Опишіть ваше замовлення або запитання..."
-                    ></textarea>
+                    <textarea id="message" name="message" rows="5" placeholder="Опишіть ваше замовлення або запитання..."></textarea>
                 </div>
                 <button type="submit" class="button button-primary">
                     Надіслати заявку
                 </button>
             </form>
+            <div id="formMessage" class="form-message"></div>
         </div>
     </section>
 </main>
