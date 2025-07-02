@@ -17,7 +17,8 @@ if (contactForm && formMessage) {
             // Ми відправляємо дані через fetch API
             const response = await fetch('/', { // Відправляємо на кореневий URL сайту
                 method: 'POST',
-                body: formData,
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString(),
             });
 
             if (response.ok) {
